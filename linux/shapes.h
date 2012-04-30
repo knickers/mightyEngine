@@ -8,6 +8,12 @@ using namespace std;
 struct point2 {double x,y;};
 struct point3 {double x,y,z;};
 
+double dtor(double degrees);
+double rtod(double radians);
+double Sin(double degrees);
+double Cos(double degrees);
+double Tan(double degrees);
+
 void FindTriangleNormal(double x[], double y[], double z[], double n[]);
 point3 FindTriangleNormal(point3 cp, point3 p1, point3 p2);
 void SpherePoint(double radius, double upAngle, double panAngle, double point_out[3]);

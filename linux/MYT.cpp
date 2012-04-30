@@ -12,11 +12,11 @@ MYT::~MYT() {
 }
 
 /*	1.  size = large + small // Arm radius = large gear + small gear
-	2. large = vanes * small // Large gear is 'vanes' times bigger than the small gear
+	2. large = vanes * small // Large gear is vanes times bigger than small gear
 
 	size-small = vanes*small
-	      size = (vanes+1)*small
-	     small = size/(vanes+1)*/
+		  size = (vanes+1)*small
+		 small = size/(vanes+1)*/
 void MYT::CalcValues() {
 	mSmallGear = mSize/(mVanes+1);    // Planet gear radius
 	mLargeGear = mSize-mSmallGear;    // Sun gear radius
@@ -28,11 +28,11 @@ void MYT::CalcValues() {
 	mConLength = sqrt(2*mSize*mSize); // Length of connecting rod
 	mConLength = sqrt(mCamLength*mCamLength+mConLength*mConLength);
 	mRotate    = 0;                   // Total output rotation
-	mFrame     = 0;                   // Counts the number of frames (used for RPM)
+	mFrame     = 0;                   // Counts the number of frames for RPM
 	mTDC       = 0;                   // Top Dead Center angle for spark plug
 	mRPM       = 0;                   // Current Revolutions Per Minute
 	mTime      = clock();             // Used for calculating RPM
-	mInnerAngle = 0;                  // Angle of blue rotor 
+	mInnerAngle = 0;                  // Angle of blue rotor
 	mOuterAngle = 0;                  // Angle of tan rotor
 }
 
@@ -89,12 +89,13 @@ void MYT::DrawToothShape() {
 	glEnd();
 }
 
-void MYT::DrawEdge(double x1, double y1, double x2, double y2) {
+void MYT::DrawEdge(double x1,double y1,double x2,double y2,float nx,float ny) {
 	glBegin(GL_QUADS);
+	glVertex3d(x1,y1, mGearWidth);
 	glVertex3d(x1,y1,-mGearWidth);
+	glNormal3f(nx, ny, 0);
 	glVertex3d(x2,y2,-mGearWidth);
 	glVertex3d(x2,y2, mGearWidth);
-	glVertex3d(x1,y1, mGearWidth);
 	glEnd();
 }
 
@@ -103,20 +104,20 @@ void MYT::DrawToothEdge() {
 	//  3/ \5
 	//  2| |6
 	// 1/___\7
-	glNormal3d(.707, .707, 0);   // 1
-	DrawEdge(-1.5, 1.5, -1.2, 1.2);
-	glNormal3d(.342, .9397, 0);  // 2
-	DrawEdge(-1.2, 1.2, 1, .7);
-	glNormal3d(.643, .766, 0);   // 3
-	DrawEdge(1, .7, 1.5, .3);
-	glNormal3d(1, 0, 0);         // 4
-	DrawEdge(1.5, .3, 1.5, -.3);
-	glNormal3d(.643, -.766, 0);  // 5
-	DrawEdge(1, -.7, 1.5, -.3);
-	glNormal3d(.342, -.9397, 0); // 6
-	DrawEdge(-1.2, -1.2, 1, -.7);
-	glNormal3d(.707, -.707, 0);  // 7
-	DrawEdge(-1.5, -1.5, -1.2, -1.2);
+	glNormal3d(Cos(0), Sin(0), 0);
+	DrawEdge(-1.5, +1.5, -1.2, +1.2, Cos(+57), Sin(+57)); // 1 - 45 deg
+	glNormal3d(Cos(+57), Sin(+57), 0);
+	DrawEdge(-1.2, +1.2, +1.0, +0.7, Cos(+60), Sin(+60)); // 2 - 70 deg
+	glNormal3d(Cos(+60), Sin(+60), 0);
+	DrawEdge(+1.0, +0.7, +1.5, +0.3, Cos(+25), Sin(+25)); // 3 - 50 deg
+	glNormal3d(Cos(+25), Sin(+25), 0);
+	DrawEdge(+1.5, +0.3, +1.5, -0.3, Cos(-25), Sin(-25)); // 4 - 00 deg
+	glNormal3d(Cos(-25), Sin(-25), 0);
+	DrawEdge(+1.5, -0.3, +1.0, -0.7, Cos(-60), Sin(-60)); // 5 - 50 deg
+	glNormal3d(Cos(-60), Sin(-60), 0);
+	DrawEdge(-1.2, -1.2, +1.0, -0.7, Cos(-57), Sin(-57)); // 6 - 70 deg
+	glNormal3d(Cos(-57), Sin(-57), 0);
+	DrawEdge(-1.2, -1.2, -1.5, -1.5, Cos(0), Sin(0)); // 7 - 45 deg
 }
 
 void MYT::DrawTooth() {

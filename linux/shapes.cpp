@@ -5,6 +5,12 @@
 using namespace std;
 #include "shapes.h"
 
+double dtor(double degrees) { return degrees*PI/180; }
+double rtod(double radians) { return radians*180/PI; }
+double Sin(double degrees) { return sin(dtor(degrees)); }
+double Cos(double degrees) { return cos(dtor(degrees)); }
+double Tan(double degrees) { return tan(dtor(degrees)); }
+
 // Given the three triangle points x[0],y[0],z[0],
 //		x[1],y[1],z[1], and x[2],y[2],z[2],
 //		Finds the normal vector n[0], n[1], n[2].

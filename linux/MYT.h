@@ -32,7 +32,7 @@ private:
 	void SetOffset();
 	void ResizePointers(int size);
 	void DrawToothShape();
-	void DrawEdge(double x1, double y1, double x2, double y2);
+	void DrawEdge(double x1, double y1, double x2, double y2,float nx,float ny);
 	void DrawToothEdge();
 	void DrawTooth();
 	void DrawGear(double outRadius, double inRadius, int teeth);

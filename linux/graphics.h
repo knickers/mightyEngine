@@ -5,6 +5,15 @@
 using namespace std;
 #include <GL/glut.h>
 
+// Platform-dependent sleep routines.
+#if defined(__WINDOWS_ASIO__) || defined(__WINDOWS_DS__)
+	#include <windows.h>
+	#define SLEEP(milliseconds) Sleep((DWORD)milliseconds)
+#else // Unix variants
+	#include <unistd.h>
+	#define SLEEP(milliseconds) usleep((unsigned long)(milliseconds * 1000.0))
+#endif
+
 const double PI = 3.141592653589793;
 
 // "Prototypes" for functions

@@ -79,8 +79,7 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(10, 10);
 
 	bool fullscreen = 0;
-	if(fullscreen)
-	{
+	if(fullscreen) {
 		glutGameModeString("1280x800:32");
 		glutEnterGameMode();
 	}
@@ -128,8 +127,13 @@ void display(void) {
 
 	// Swap the image to the front screen
 	glutSwapBuffers();
-	// Loop over the display function
-	glutPostRedisplay();
+	// Give the processor a break
+	SLEEP(10);
+	// No need to loop if it's not turning
+	if (gSpeedSlider.GetValue()*gSpeed) {
+		// Loop over the display function
+		glutPostRedisplay();
+	}
 }
 
 // This callback function gets called by the Glut
@@ -264,14 +268,13 @@ void InitializeMyStuff() {
 	glLightfv(GL_LIGHT0, GL_SPECULAR, low_light);      // first light's shadow color
 }
 
-//****************************************************************************************************//
-//****************************************************************************************************//
-//****************************************** Permanent Code ******************************************//
-//****************************************************************************************************//
-//****************************************************************************************************//
+//****************************************************************************//
+//****************************************************************************//
+//****************************** Permanent Code ******************************//
+//****************************************************************************//
+//****************************************************************************//
 
-/*void SaveAnim(int frames)
-{
+/*void SaveAnim(int frames) {
 	static int count = 0;
 	Save("ppm");
 	count++;
@@ -279,9 +282,9 @@ void InitializeMyStuff() {
 		exit(0);
 }*/
 
-void MoveCamera()
-{	// Set near and far planes
-	double dist = (1-gZoomSlider.GetValue()) * gDist + 100;
+void MoveCamera() {
+	// Set near and far planes
+	double dist = (1-gZoomSlider.GetValue()) * gDist + 50;
 	gFar  = dist+100;
 	gNear = dist-160;
 	if(gNear <= 0)
@@ -298,8 +301,7 @@ void MoveCamera()
 }
 
 // Outputs a string of text at the specified location.
-void text_output(double x, double y, char *string)
-{
+void text_output(double x, double y, char *string) {
 	void *font = GLUT_BITMAP_9_BY_15;
 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -315,8 +317,7 @@ void text_output(double x, double y, char *string)
 }
 
 // Outputs text to the screen in 'stroke' format
-void stroke_text(double x, double y, int scale, int rotate, string string)
-{
+void stroke_text(double x, double y, int scale, int rotate, string string) {
 	void *font = GLUT_STROKE_ROMAN;
 	int length = (int) string.size();
 	glPushMatrix();
@@ -329,8 +330,7 @@ void stroke_text(double x, double y, int scale, int rotate, string string)
 }
 
 // Outputs a number to the screen at the specified location
-void number_output(double x, double y, double num)
-{
+void number_output(double x, double y, double num) {
 	void *font = GLUT_BITMAP_9_BY_15;
 	string temp;
 	stringstream out;
@@ -349,8 +349,7 @@ void number_output(double x, double y, double num)
 }
 
 // Outputs a number in 'stroke' text format
-void stroke_number(double x, double y, int scale, int rotate, double num)
-{
+void stroke_number(double x, double y, int scale, int rotate, double num) {
 	void *font = GLUT_STROKE_ROMAN;
 	string temp;
 	stringstream out;
@@ -368,15 +367,14 @@ void stroke_number(double x, double y, int scale, int rotate, double num)
 }
 
 // Return a random number between a low and a high
-int random(int low, int high)
-{
+int random(int low, int high) {
 	return rand() % (high-low+1) + low;
 }
 
 // This callback function gets called by the Glut
 // system whenever the window is resized by the user.
-void reshape(int w, int h)
-{	// Reset the global variables to the new width and height.
+void reshape(int w, int h) {
+	// Reset the global variables to the new width and height.
 	screen_x = w;
 	screen_y = h;
 	// Set the pixel resolution of the final picture (Screen coordinates).
@@ -384,16 +382,15 @@ void reshape(int w, int h)
 	// Resize the sliders
 	w = screen_x/30+14; h = screen_y-110;
 	gSpeedSlider.SetSize(w, h);
-	 gZoomSlider.SetSize(w, h);
+	gZoomSlider.SetSize(w, h);
 	w = screen_x/32; h = h/2 + 45;
 	gSpeedSlider.SetPos(w  , h);
-	 gZoomSlider.SetPos(w*3, h);
+	gZoomSlider.SetPos(w*3, h);
 	// Redraw the screen
 	glutPostRedisplay();
 }
 
-void Set2DView()
-{
+void Set2DView() {
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_LIGHT0);
@@ -405,8 +402,7 @@ void Set2DView()
 	glLoadIdentity();
 }
 
-void Set3DView()
-{
+void Set3DView() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
@@ -418,8 +414,7 @@ void Set3DView()
 	gluLookAt(EYE[0],EYE[1],EYE[2],  AT[0],AT[1],AT[2],  UP[0],UP[1],UP[2]);
 }
 
-double GetFPS()
-{
+double GetFPS() {
 	static clock_t startTime = clock();
 
 	double fps = clock() - startTime;
@@ -428,8 +423,7 @@ double GetFPS()
 }
 
 // Returns the number of frames used devided by the time passed
-double GetFramesPerSecond()
-{
+double GetFramesPerSecond() {
 	static int frames = 0;
 	static clock_t startTime = clock();
 
