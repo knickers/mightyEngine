@@ -3,19 +3,21 @@
 #include <fstream>
 using namespace std;
 
-class frac
-{
+class frac {
 private:
 	int mNumerator;
 	int mDenominator;
 public:
+	frac();
 	frac(int num, int den);
 	int  num() const ;
 	int  den() const ;
-	void num(int const & n);
-	void den(int const & d);
+	bool num(int const & n);
+	bool den(int const & d);
+	bool set(int const & numerator, int const & denominator);
 	void reduce();
 	void inverse();
+	double dbl();
 
 	frac & operator = (const frac & rhs);
 	frac & operator = (const int & rhs);
