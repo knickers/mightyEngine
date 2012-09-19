@@ -79,12 +79,11 @@ int main(int argc, char **argv) {
 	glutInitWindowPosition(10, 10);
 
 	bool fullscreen = 0;
-	if(fullscreen) {
+	if (fullscreen) {
 		glutGameModeString("1280x800:32");
 		glutEnterGameMode();
-	}
-	else
-		glutCreateWindow("8 Cylinder Massive Yet Tiny Engine (MYT)"); // Title of the window
+	} else // Title of the window
+		glutCreateWindow("8 Cylinder Massive Yet Tiny Engine (MYT)");
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
@@ -115,13 +114,13 @@ void display(void) {
 	gSpeedSlider.Draw();
 	gZoomSlider.Draw();
 	glColor3f(0,0,0);
-	text_output(10, 7, "RPM:");
-	number_output(50, 7, gMYT.GetRPM());
+	text_output(10, 7, (char*)"RPM:");
+	number_output(50, 7, gSpeedSlider.GetValue() ? gMYT.GetRPM() : 0);
 	DrawRoundSquare(screen_x/32  , screen_y-25, screen_x/30+14, 30, 10);
 	DrawRoundSquare(screen_x/32*3, screen_y-25, screen_x/30+14, 30, 10);
 	glColor3f(1,1,1);
-	text_output(screen_x/32-22, screen_y-30, "Speed");
-	text_output(screen_x/32*3-18, screen_y-30, "Zoom");
+	text_output(screen_x/32-22, screen_y-30, (char*)"Speed");
+	text_output(screen_x/32*3-18, screen_y-30, (char*)"Zoom");
 	if(gShowMenu)
 		gMYT.DrawMenu();
 
@@ -284,7 +283,7 @@ void InitializeMyStuff() {
 
 void MoveCamera() {
 	// Set near and far planes
-	double dist = (1-gZoomSlider.GetValue()) * gDist + 50;
+	double dist = (1-gZoomSlider.GetValue()) * gDist + 100;
 	gFar  = dist+100;
 	gNear = dist-160;
 	if(gNear <= 0)

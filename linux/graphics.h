@@ -14,7 +14,7 @@ using namespace std;
 	#define SLEEP(milliseconds) usleep((unsigned long)(milliseconds * 1000.0))
 #endif
 
-const double PI = 3.141592653589793;
+#define PI 3.141592653589793
 
 // "Prototypes" for functions
 int random(int low, int high);

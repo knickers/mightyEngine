@@ -14,8 +14,7 @@ double Tan(double degrees) { return tan(dtor(degrees)); }
 // Given the three triangle points x[0],y[0],z[0],
 //		x[1],y[1],z[1], and x[2],y[2],z[2],
 //		Finds the normal vector n[0], n[1], n[2].
-void FindTriangleNormal(double x[], double y[], double z[], double n[])
-{
+void FindTriangleNormal(double x[], double y[], double z[], double n[]) {
 	// Convert the 3 input points to 2 vectors, v1 and v2.
 	double v1[3], v2[3];
 	v1[0] = x[1] - x[0];
@@ -38,8 +37,7 @@ void FindTriangleNormal(double x[], double y[], double z[], double n[])
 // Given the three triangle points;
 //		CenterPoint, Point1, Point2
 // Finds the normal vector n.x, n.y, n.z,
-point3 FindTriangleNormal(point3 cp, point3 p1, point3 p2)
-{
+point3 FindTriangleNormal(point3 cp, point3 p1, point3 p2) {
 	// Convert the 3 input points to 2 vectors, v1 and v2.
 	double v1[3], v2[3];
 	v1[0] = p1.x - cp.x;
@@ -64,23 +62,21 @@ point3 FindTriangleNormal(point3 cp, point3 p1, point3 p2)
 	return n;
 }
 // Fine a point on a sphere given the up and pan angles
-void SpherePoint(double radius, double upAngle, double panAngle, double point_out[3])
-{
+void SpherePoint(double radius, double upAngle, double panAngle, double point_out[3]) {
 	double temp  = radius*cos(upAngle);
 	point_out[0] = temp*cos(panAngle);
 	point_out[1] = temp*sin(panAngle);
 	point_out[2] = radius*sin(upAngle);
 }
 // Fine a point on a sphere given the up and pan angles
-void SpherePoint(double radius, double upAngle, double panAngle, point3 &point_out)
-{
+void SpherePoint(double radius, double upAngle, double panAngle, point3 &point_out) {
 	double temp = radius*cos(upAngle);
 	point_out.x = temp*cos(panAngle);
 	point_out.y = temp*sin(panAngle);
 	point_out.z = radius*sin(upAngle);
 }
-void CrossProduct(double v1[],double v2[],double r[])
-{	/*
+void CrossProduct(double v1[],double v2[],double r[]) {
+	/*
 		i     j     k
 	   v1[0] v1[1] v1[2]
 	   v2[0] v2[1] v2[2]
@@ -89,8 +85,7 @@ void CrossProduct(double v1[],double v2[],double r[])
 	r[1] = -((v1[0]*v2[2])-(v1[2]*v2[0]));
 	r[2] = (v1[0]*v2[1])-(v1[1]*v2[0]);
 }
-void UnitVector(double v[], double dest[])
-{
+void UnitVector(double v[], double dest[]) {
 	double length = 0;
 	for(int i=0; i<3; i++)
 		length += v[i]*v[i];
@@ -103,32 +98,29 @@ void UnitVector(double v[], double dest[])
 		for(int i=0; i<3; i++)
 			dest[i] = v[i]/length;
 }
-double DotProduct(double v1[], double v2[])
-{
+double DotProduct(double v1[], double v2[]) {
 	double answer = 0;
 	for(int i=0; i<3; i++)
 		answer += v1[i]*v2[i];
 	return answer;
 }
-double LOCangle(double sideA, double sideB, double sideC)
-{
+double LOCangle(double sideA, double sideB, double sideC) {
 	return acos((sideB*sideB+sideC*sideC-sideA*sideA)/(2*sideB*sideC));
 }
 
-double LOCside(double angleA, double sideB, double sideC)
-{	// angleA in radians
+double LOCside(double angleA, double sideB, double sideC) {
+	// angleA in radians
 	return sqrt(sideB*sideB + sideC*sideC - 2*sideB*sideC*cos(angleA));
 }
 
-void DrawAxis(double length, float xColor[], float yColor[], float zColor[])
-{
+void DrawAxis(double length, float xColor[], float yColor[], float zColor[]) {
 	// x axis
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, xColor);
-	text_output(length+1,0,"X");
+	text_output(length+1,0,(char*)"X");
 	DrawLine(0,0,length,0);
 	// y axis
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, yColor);
-	text_output(0,length+1,"Y");
+	text_output(0,length+1,(char*)"Y");
 	DrawLine(0,0,0,length);
 	// z axis
 	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, zColor);
@@ -137,17 +129,15 @@ void DrawAxis(double length, float xColor[], float yColor[], float zColor[])
 	glVertex3d(0,0,length);
 	glEnd();
 	glTranslated(0,0,length+1);
-		text_output(0,0,"Z");
+		text_output(0,0,(char*)"Z");
 	glTranslated(0,0,-length-1);
 }
 
 // Draws a 32 sided polygon (circle) at the specified location
-void DrawCircle(double x1, double y1, double radius)
-{
+void DrawCircle(double x1, double y1, double radius) {
 	glBegin(GL_POLYGON);
 	glNormal3d(0,0,0);
-	for(int i=0; i<32; i++)
-	{
+	for(int i=0; i<32; i++) {
 		double theta = (double)i/32.0 * 2.0 * PI;
 		double x = x1 + radius * cos(theta);
 		double y = y1 + radius * sin(theta);
@@ -158,8 +148,7 @@ void DrawCircle(double x1, double y1, double radius)
 
 // Draws a 32 sided polygon (circle) at the specified location,
 // with the specified colors
-void DrawCircle(double x1, double y1, double radius, float insideColor[], float outsideColor[])
-{
+void DrawCircle(double x1, double y1, double radius, float insideColor[], float outsideColor[]) {
 	glBegin(GL_POLYGON);
 	glColor3fv(insideColor);
 	glVertex2d(x1,y1);
