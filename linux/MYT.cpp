@@ -11,7 +11,7 @@ void tooth::SetWidth(double w) {
 }
 double tooth::GetArcLength() {
 	// Arc length: S = ra
-	double arcLength = 20*2*PI/36;
+	double arcLength = 10*2*PI/36;
 	printf("Gear Tooth Arc length: %f radians\n", arcLength);
 	return arcLength;
 }
